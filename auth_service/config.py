@@ -23,8 +23,8 @@ class AuthConfig:
     environment: str = "development"  # development | test | production
     app_base_url: str = "http://localhost:5000"
     allowed_origins: tuple = ()
-    verify_path: str = "/verify-email"  # token is sent in the URL fragment
-    reset_path: str = "/reset-password"  # token is sent in the URL fragment
+    verify_path: str = "/registration/"  # token is sent in the URL fragment
+    reset_path: str = "/login/"  # token is sent in the URL fragment
 
     # Cookie / session policy
     cookie_secure: bool = False  # must be True in production (HTTPS only)

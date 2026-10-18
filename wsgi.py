@@ -2,20 +2,19 @@ from pathlib import Path
 import sys
 
 from dotenv import load_dotenv
-from werkzeug.middleware.proxy_fix import ProxyFix  # Add this import
+from werkzeug.middleware.proxy_fix import ProxyFix
 
-# Support both `flask --app wsgi` from backend/ and
-# `flask --app backend.wsgi` from the repository root.
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
-if str(PROJECT_ROOT) not in sys.path:
-    sys.path.insert(0, str(PROJECT_ROOT))
+# Ensure the repository root is on sys.path
+ROOT_DIR = Path(__file__).resolve().parent
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
 
-from backend.app import create_app
-from backend.auth_service import AuthService
+from app import create_app
+from auth_service import AuthService
 
 # Load local secrets for development. Deployment environment variables take
 # precedence because load_dotenv does not override existing values.
-load_dotenv(Path(__file__).with_name(".env"))
+load_dotenv(ROOT_DIR / ".env")
 
 auth = AuthService.from_env()
 auth.init_db()
